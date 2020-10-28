@@ -11,3 +11,8 @@ npm install
 
 # 启动
 npm run start
+
+# 使用说明
+启动完成打开http://localhost:3000
+
+输入任意账号密码即可
