@@ -6,7 +6,7 @@ import 'antd/dist/antd.css'
 import './utils/i18n'
 import App from './App'
 import { mainRoutes } from './routes'
-import * as serviceWorker from './serviceWorker';
+import * as serviceWorker from './serviceWorker'
 import notFound from './views/error/notFound'
 
 ReactDOM.render(
