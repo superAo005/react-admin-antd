@@ -20,10 +20,10 @@ ReactDOM.render(
           // return <Route key={route.path} component={route.component}></Route>
           return <Route key={route.path} {...route}></Route>
         }) }
+        {/* 如果上面遍历中没有找到路由则会执行当前重定向路由404 */}
+        <Redirect to="/admin" from="/"></Redirect>
+        <Redirect to="/404"></Redirect>
       </Switch>
-      {/* 如果上面遍历中没有找到路由则会执行当前重定向路由404 */}
-      {/* <Redirect to="/404"></Redirect> */}
-      <Route key='/*' path='/*' component={notFound}></Route>
   </BrowserRouter>,
   document.getElementById("root")
 );

@@ -1,12 +1,13 @@
 import React, { Fragment } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown } from 'antd'
-import Icon from '@ant-design/icons'
 import logo from './logo192.png'
 import { adminRoutes as routes } from '../../routes'
 import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutlined } from '@ant-design/icons';
 import './index.css'  
 import { Trans, withTranslation } from 'react-i18next'
+import Auth from '../../utils/auth'
+import { notification } from 'antd'
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -34,15 +35,13 @@ const languages = [
 @withTranslation()
 @withRouter
 class Index extends React.Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            collapsed: false,
-            pathSnippets: null,
-            extraBreadcrumbItems: null,
-            state: null,
-            theme: 'dark'
-        }
+    state = {
+        collapsed: false,
+        pathSnippets: null,
+        extraBreadcrumbItems: null,
+        state: null,
+        theme: 'dark',
+        username: JSON.parse(localStorage.getItem('loginInfo')).username
     }
     
     toggle = () => {
@@ -184,11 +183,14 @@ class Index extends React.Component{
                                         <span style={{ color: '#999', marginRight: 4, marginLeft:5 }}>
                                             <Trans>你好</Trans>,
                                         </span>
-                                        <span>张三</span>
+                                        <span>{this.state.username}</span>
                                     </Fragment>
                                 }
                             >
-                                <Menu.Item key="SignOut">
+                                <Menu.Item key="SignOut" onClick={()=>{
+                                    Auth.logOut()
+                                    this.props.history.push('/login')
+                                }}>
                                     <Trans>退出登录</Trans>
                                 </Menu.Item>
                             </SubMenu>

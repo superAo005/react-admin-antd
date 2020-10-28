@@ -5,9 +5,9 @@ import './utils/i18n'
 import './App.css'
 import Frame from './components/Frame'
 import notFound from './views/error/notFound'
+import Auth from './utils/auth'
 
 class App extends React.Component {
-
   // 递归处理路由
   generateRoute(item){
     // 有子路由
@@ -27,7 +27,7 @@ class App extends React.Component {
   }
 
   render(){
-    return (
+    return Auth.isLogin() ? (
       <Frame>
         <Switch>
           {
@@ -35,12 +35,14 @@ class App extends React.Component {
                 return this.generateRoute(item)
               })
           }
+          {/* 如果路由访问的地址是/admin则进入第一个路由 */}
+          <Redirect to={adminRoutes[0].path} from="/admin"></Redirect>
           {/* 如果上面遍历中没有找到路由则会执行当前重定向路由404 */}
           {/* <Redirect to="/404"></Redirect> */}
           <Route key='/*' path='/*' component={notFound}></Route>
         </Switch>
       </Frame>
-    )
+    ) : <Redirect to="/login"></Redirect>
   }
 }
 

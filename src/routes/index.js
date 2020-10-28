@@ -5,9 +5,6 @@ import Login from "../views/Login"
 // 404
 import notFound from "../views/error/notFound"
 
-// 根页面
-import App from '../App'
-
 // 看板
 import Dashboard from "../views/admin/dashboard"
 
@@ -37,12 +34,6 @@ export const mainRoutes = [
 
 // 菜单路由
 export const adminRoutes = [
-    {
-        path: '/admin',
-        component: App,
-        exact: true,
-        isShow: false
-    },
     {
         path: '/admin/dashboard',
         component: Dashboard,
