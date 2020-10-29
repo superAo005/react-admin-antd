@@ -17,8 +17,6 @@ import Edit from "../views/admin/products/Edit"
 import Assembly from "../views/admin/assembly"
 import From from "../views/admin/assembly/From"
 import Button from "../views/admin/assembly/Button"
-import { func } from "prop-types"
-
 
 
 // 主要路由

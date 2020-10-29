@@ -7,6 +7,8 @@ react + antd
 
 # 安装教程
 cd shop-manager
+
+
 npm install
 
 # 启动
