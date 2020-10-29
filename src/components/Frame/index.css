@@ -96,3 +96,16 @@
     background: #FFF;
 }
 
+/* 标签页 */
+.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane{
+    height: 100%;
+}
+
+.ant-tabs-top > .ant-tabs-nav{
+    margin: 5px 5px;
+}
+
+.ant-tabs-tab .anticon {
+    margin-right: 5px;
+}
+

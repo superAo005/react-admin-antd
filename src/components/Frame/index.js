@@ -1,15 +1,15 @@
 import React, { Fragment } from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown } from 'antd'
+import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown, Tabs, Button, notification } from 'antd'
 import logo from './logo192.png'
 import { adminRoutes as routes } from '../../routes'
 import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutlined } from '@ant-design/icons';
 import './index.css'  
 import { Trans, withTranslation } from 'react-i18next'
 import Auth from '../../utils/auth'
-import { notification } from 'antd'
-const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu
+const { Header, Content, Footer, Sider } = Layout
+const { TabPane } = Tabs
 
 // 阿里矢量图标地址
 const IconFont = createFromIconfontCN({
@@ -19,6 +19,8 @@ const IconFont = createFromIconfontCN({
 //具体导航的名称
 const breadcrumbNameMap = {}
 
+
+// 语言类型
 const languages = [
     {
         key: 'zh',
@@ -32,24 +34,37 @@ const languages = [
     }
 ]
 
+// 标签页初始值
+const panes = []
+
 @withTranslation()
 @withRouter
 class Index extends React.Component{
+
     state = {
         collapsed: false,
         pathSnippets: null,
         extraBreadcrumbItems: null,
         state: null,
         theme: 'dark',
-        username: JSON.parse(localStorage.getItem('loginInfo')).username
+        username: JSON.parse(localStorage.getItem('loginInfo')).username,
+        activeKey: null,
+        panes,
+        openKeys: ()=>{
+            let arr = this.props.location.pathname.split('/')
+            arr.pop()
+            return arr.join('/')
+        }
     }
     
+    // 折叠左侧菜单栏
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
         })
     }
 
+    // 切换语言
     handleLanguageChange = ({key})=>{
         this.props.i18n.changeLanguage(key)
     }
@@ -99,7 +114,7 @@ class Index extends React.Component{
         })
     }
 
-    // 递归处理路由
+    // 递归处理左侧菜单栏
     renderMenu=(data)=>{
         return data.map((item)=>{
             if (item.childrens) {  //如果有子节点，继续递归调用，直到没有子节点
@@ -113,7 +128,7 @@ class Index extends React.Component{
             }
             if(item.isShow){
                 //没有子节点就返回当前的父节点
-                return <Menu.Item title={<Trans>{item.title}</Trans>} key={item.path} icon={ <IconFont type={item.icon} /> } onClick={ p => this.toRouteView(p.key) }>
+                return <Menu.Item title={<Trans>{item.title}</Trans>} key={item.path} icon={ <IconFont type={item.icon} /> } onClick={ p => this.toRouteView(item) }>
                     <Trans>{item.title}</Trans>
                 </Menu.Item>
             }
@@ -121,8 +136,103 @@ class Index extends React.Component{
     }
 
     // 路由跳转到页面
-    toRouteView = (key) => {
-        this.props.history.push(key)
+    toRouteView = (item) => {
+        // 判断当前路由是否已经存在标签页数组中
+        let arr = this.state.panes.map(route=>{
+            return route.path
+        })
+
+        // 如果不存在则添加标签页,存在则直接跳转
+        if(!arr.includes(item.path)){
+            let panes = this.state.panes
+            panes.push(item)
+            this.setState({ 
+                panes, 
+                activeKey:item.path,
+                openKeys: ()=>{
+                    let arr = item.path.split('/')
+                    arr.pop()
+                    return arr.join('/')
+                }
+            })
+        }else{
+            this.setState({ activeKey:item.path })
+        }
+        this.props.history.push(item.path)
+        
+    }
+
+    // 标签页改变时
+    onChange = activeKey => {
+        this.state.activeKey = activeKey
+        this.state.openKeys = ()=>{
+            let arr = activeKey.split('/')
+            arr.pop()
+            return arr.join('/')
+        }
+        this.props.history.push(activeKey)
+    }
+
+    // 标签页关闭时回调
+    onEdit = (targetKey, action) => {
+        this[action](targetKey)
+    }
+
+    // 删除标签页
+    remove = targetKey => {
+        let { activeKey } = this.state
+        let lastIndex
+        this.state.panes.forEach((pane, i) => {
+            if (pane.path === targetKey) {
+            lastIndex = i - 1
+            }
+        });
+        const panes = this.state.panes.filter(pane => pane.path !== targetKey);
+        if (panes.length && activeKey === targetKey) {
+            if (lastIndex >= 0) {
+            activeKey = panes[lastIndex].path
+            } else {
+            activeKey = panes[0].path
+            }
+        }
+        this.setState({ panes, activeKey })
+        this.props.history.push(activeKey)
+    }
+
+    // 当左侧菜单被展开或关闭时触发此处
+    onOpenChange = (openKeys) => {  
+        if (openKeys.length !== 0) { 
+            this.setState({
+                openKeys: ()=>{
+                    return openKeys[1]
+                }
+            }) 
+        }else{
+            this.setState({
+                openKeys: ()=>{
+                    return null
+                }
+            })
+        }
+    }
+
+    // 页面刷新时,初始化标签页
+    newTabs = (routers)=>{ 
+        for(let i in routers){
+            if(!routers[i].childrens && routers[i].isShow && routers[i].path === this.props.location.pathname){
+                let panes = this.state.panes
+                panes.push(routers[i])
+                this.setState({ panes, activeKey:routers[i].path })
+            }
+            if(routers[i].isShow){
+                this.newTabs(routers[i].childrens)
+            }
+        }
+    }
+
+    // constructor加载之后,DOM渲染之前执行此方法
+    componentWillMount(){
+        this.newTabs(routes)
     }
 
     render(){
@@ -139,7 +249,14 @@ class Index extends React.Component{
                         {!this.state.collapsed && <h1><Trans>后台管理系统</Trans></h1>}
                     </div>
 
-                    <Menu className="menuContainer" mode="inline" theme={this.state.theme}>
+                    <Menu 
+                        className="menuContainer" 
+                        mode="inline" 
+                        theme={this.state.theme} 
+                        openKeys={[this.state.openKeys()]}
+                        selectedKeys={[this.props.location.pathname]} 
+                        onOpenChange={this.onOpenChange}
+                    >
                         {/* 左侧菜单栏 */}
                         {this.renderMenu(routes)}
                     </Menu>
@@ -170,10 +287,15 @@ class Index extends React.Component{
                             className: 'trigger',
                             onClick: this.toggle,
                         })}
+                        {/* 面包屑 */}
+                        <Breadcrumb style={{ margin: '21px 0',padding: '0 24px',float: 'left' }}>
+                            {this.state.extraBreadcrumbItems}
+                        </Breadcrumb>
                         <Menu theme='light' mode="horizontal" style={{ height: '64px' }}>
-                            <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
+                            
+                            {/* <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
                             <Menu.Item key="2"><Trans>菜单二</Trans></Menu.Item>
-                            <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item>
+                            <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item> */}
                             
                             {/* 头像和登录名称 */}
                             <SubMenu style={{ float: 'right' }}
@@ -214,20 +336,35 @@ class Index extends React.Component{
                             </Dropdown>
                         </Menu>
                     </Header>
-                    {/* 面包屑 */}
-                    <Breadcrumb style={{ margin: '12px 0',padding: '0 24px' }}>
-                        {this.state.extraBreadcrumbItems}
-                    </Breadcrumb>
-                    {/* 内容区域 */}
-                    <Content
-                        style={{
-                            backgroundColor:'#FFF',
-                            margin: '0 16px',
-                            minHeight: 280,
-                        }}
-                    >
-                        {this.props.children}
-                    </Content>
+                    {/* 标签页 */}
+                    <Tabs
+                        hideAdd
+                        onChange={this.onChange}
+                        activeKey={this.state.activeKey}
+                        type="editable-card"
+                        onEdit={this.onEdit}
+                        size="small"
+                        tabPosition="top"
+                        animated={true}
+                        >
+                        {
+                            this.state.panes.map(pane => (
+                            <TabPane tab={ <span> <IconFont type={pane.icon}/>{pane.title} </span> } key={pane.path}>
+                                    {/* 内容区域 */}
+                                    <Content
+                                        style={{
+                                            backgroundColor:'#FFF',
+                                            margin: '0 5px',
+                                            height: '100%',
+                                            overflowY: "auto"
+                                        }}
+                                    >
+                                        {this.props.children}
+                                    </Content>
+                                </TabPane>
+                            ))
+                        }
+                    </Tabs>
                     {/* 底部 */}
                     <Footer style={{ textAlign: 'center' }}><Trans>睿颐软件科技有限公司</Trans> ©2020 Created by Ant UED</Footer>
                 </Layout>
