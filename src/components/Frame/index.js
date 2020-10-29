@@ -16,9 +16,8 @@ const IconFont = createFromIconfontCN({
   scriptUrl: '//at.alicdn.com/t/font_2157315_zfizvyxc36.js',
 })
 
-//具体导航的名称
+// 初始化面包屑数据
 const breadcrumbNameMap = {}
-
 
 // 语言类型
 const languages = [
@@ -293,9 +292,9 @@ class Index extends React.Component{
                         </Breadcrumb>
                         <Menu theme='light' mode="horizontal" style={{ height: '64px' }}>
                             
-                            {/* <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
+                            <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
                             <Menu.Item key="2"><Trans>菜单二</Trans></Menu.Item>
-                            <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item> */}
+                            <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item>
                             
                             {/* 头像和登录名称 */}
                             <SubMenu style={{ float: 'right' }}
@@ -349,7 +348,7 @@ class Index extends React.Component{
                         >
                         {
                             this.state.panes.map(pane => (
-                            <TabPane tab={ <span> <IconFont type={pane.icon}/>{pane.title} </span> } key={pane.path}>
+                            <TabPane tab={ <span> <IconFont type={pane.icon}/> <Trans>{pane.title}</Trans> </span> } key={pane.path}>
                                     {/* 内容区域 */}
                                     <Content
                                         style={{
