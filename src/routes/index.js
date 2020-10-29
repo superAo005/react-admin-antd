@@ -41,7 +41,7 @@ export const adminRoutes = [
         exact: true,
         isShow: true,
         title: '仪表盘',
-        icon: "icon-kanban"
+        icon: "icon-yibiao"
     },
     {
         path: '/admin/products', // 路由
@@ -49,7 +49,7 @@ export const adminRoutes = [
         exact: true, // 是否严格模式
         isShow: true, // 是否显示
         title: '商品管理', // 左侧菜单栏和面包签名称
-        icon: "icon-shangpin", // 图标
+        icon: "icon-xiazai", // 图标
         route:true, // 面包签中不能进行点击则加上route
         childrens:[ // 嵌套路由
             {
@@ -62,8 +62,8 @@ export const adminRoutes = [
                 component: List,
                 exact: true,
                 isShow: true,
-                title: '商品列表',
-                icon: "icon-shangpinliebiao"
+                title: '列表',
+                icon: "icon-shangpinliebiao1"
             }
         ]
     },
@@ -73,7 +73,7 @@ export const adminRoutes = [
         exact: true,
         isShow: true, 
         title: '组件',
-        icon: "icon-zujian1",
+        icon: "icon-sub-unit",
         route:true,
         childrens:[
             {
@@ -82,7 +82,7 @@ export const adminRoutes = [
                 exact: true,
                 isShow: true,
                 title: '表单',
-                icon: "icon-cloud-form"
+                icon: "icon-biaodan"
             },
             {
                 path: '/admin/assembly/button',
@@ -90,7 +90,7 @@ export const adminRoutes = [
                 exact: true,
                 isShow: true,
                 title: '按钮',
-                icon: "icon-anniu"
+                icon: "icon-anniu2"
             }
         ]
     }

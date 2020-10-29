@@ -13,7 +13,7 @@ const { TabPane } = Tabs
 
 // 阿里矢量图标地址
 const IconFont = createFromIconfontCN({
-  scriptUrl: '//at.alicdn.com/t/font_2157315_zfizvyxc36.js',
+  scriptUrl: '//at.alicdn.com/t/font_2157315_zw5fcjkap0d.js',
 })
 
 // 初始化面包屑数据
@@ -103,8 +103,8 @@ class Index extends React.Component{
             if(breadcrumbNameMap[url]){
                 return (
                     <Breadcrumb.Item key={url}>
-                        <Link to={breadcrumbNameMap[url].route ? '#' : url}>
-                            <IconFont type={breadcrumbNameMap[url].icon} />
+                        <Link to={breadcrumbNameMap[url].route ? '#' : url} style={{fontWeight: 'bold'}}>
+                            <IconFont type={breadcrumbNameMap[url].icon} style={{marginRight: '3px'}}/>
                             <Trans>{breadcrumbNameMap[url].title}</Trans>
                         </Link>
                     </Breadcrumb.Item>
@@ -292,9 +292,9 @@ class Index extends React.Component{
                         </Breadcrumb>
                         <Menu theme='light' mode="horizontal" style={{ height: '64px' }}>
                             
-                            <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
+                            {/* <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
                             <Menu.Item key="2"><Trans>菜单二</Trans></Menu.Item>
-                            <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item>
+                            <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item> */}
                             
                             {/* 头像和登录名称 */}
                             <SubMenu style={{ float: 'right' }}
