@@ -6,19 +6,25 @@ import './login.css'
 
 class Login extends React.Component{
 
-    state = {
-        username:null,
-        password:null,
-        isRemeber:false
+    
+    constructor(props){
+        super(props)
+        this.state = {
+            username:null,
+            password:null,
+            isRemeber:false
+        }
     }
 
     // 渲染用户
     isRemeber = () => {
         let userinfo = Auth.getUserPwd()
         if(userinfo && userinfo.remember){
-            this.state.username = userinfo.username
-            this.state.password = userinfo.password
-            this.state.isRemeber = 'checked'
+            this.setState({
+                username: userinfo.username,
+                password: userinfo.password,
+                isRemeber: 'checked'
+            })
         }
     }
 
@@ -28,12 +34,15 @@ class Login extends React.Component{
         Auth.setToken('shaiudhsakjsaidhsakjndsjkahdakjldsa')
         // 是否点击记住我，如果点击则保存用户账号和密码
         Auth.setUserPwd(values)
-
         this.props.history.push('/admin') // 成功后跳转
     }
 
-    render(){
+    // constructor加载之后,DOM渲染之前执行此方法
+    componentWillMount(){
         this.isRemeber()
+    }
+
+    render(){
         return (
             <Card title="后台管理系统" className="login-form">
                 <Form

@@ -1,5 +1,3 @@
-import { func } from "prop-types"
-
 const auth = {}
 
 /**

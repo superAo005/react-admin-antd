@@ -1,6 +1,6 @@
 import React from 'react'
 import { Trans } from 'react-i18next'
-import { Card, Table, Button, Divider, Popconfirm } from 'antd'
+import { Card, Table, Button, Popconfirm } from 'antd'
 
 const columns = [
     {

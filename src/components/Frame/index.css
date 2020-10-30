@@ -96,16 +96,24 @@
     background: #FFF;
 }
 
-/* 标签页 */
-.ant-tabs, .ant-tabs-content, .ant-tabs-tabpane{
-    height: 100%;
+.ant-dropdown-link{
+    color: #1890ff;
 }
 
+.ant-dropdown-link:hover{
+    cursor: pointer;
+}
+
+/* 标签页 */
 .ant-tabs-top > .ant-tabs-nav{
     margin: 5px 5px;
 }
 
 .ant-tabs-tab .anticon {
-    margin-right: 5px;
+    margin-right: 2px;
+}
+
+.ant-tabs-tab-remove {
+    margin-left: 0;
 }
 

@@ -4,6 +4,7 @@ import Login from "../views/Login"
 
 // 404
 import notFound from "../views/error/notFound"
+import Home from "../views/admin"
 
 // 看板
 import Dashboard from "../views/admin/dashboard"
@@ -33,6 +34,15 @@ export const mainRoutes = [
 
 // 菜单路由
 export const adminRoutes = [
+    {
+        path: '/admin',
+        component: Home,
+        hideClose:true, // 标签页是否隐藏关闭图标
+        exact: true,
+        isShow: true,
+        title: '首页',
+        icon: "icon-icon-shouye"
+    },
     {
         path: '/admin/dashboard',
         component: Dashboard,
