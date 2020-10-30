@@ -20,7 +20,7 @@ npm run start
 输入任意账号密码即可
 
 # 大致目录结构
-
+```
 ├── public                  项目静态资源
 ├── src                     主要开发
 |   ├── components          公共组件
@@ -35,4 +35,5 @@ npm run start
 |   |—— App.js              App组件
 |—— |—— index.js            react组件入口
 |   └── serviceWorker.js    react注解使用配置
-└── 说明文档    
+└── 说明文档   
+```
