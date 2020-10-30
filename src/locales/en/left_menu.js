@@ -1,4 +1,5 @@
 const left_menu = {
+    "首页": "Home",
     "仪表盘": "Dashboard",
     "商品管理": "Product Admin",
     "列表": "List",
