@@ -19,6 +19,10 @@ import Assembly from "../views/admin/assembly"
 import From from "../views/admin/assembly/From"
 import Button from "../views/admin/assembly/Button"
 
+// 测试页面
+import Test from "../views/admin/test"
+
+
 
 // 主要路由
 export const mainRoutes = [
@@ -101,5 +105,13 @@ export const adminRoutes = [
                 icon: "icon-anniu2"
             }
         ]
-    }
+    },
+    {
+        path: '/admin/test',
+        component: Test,
+        exact: true,
+        isShow: true,
+        title: 'redux测试',
+        icon: "icon-yibiao"
+    },
 ]
