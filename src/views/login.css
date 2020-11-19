@@ -1,9 +1,11 @@
 #root{
-    background-color: #dddddd;
+    /* background-color: #dddddd; */
+    background: url("../assets/images/banner.jpg") no-repeat center center;
+    background-size: cover;
 }
 .login-form {
     max-width: 480px;
-    left: 50%;
+    left: 80%;
     top: 50%;
     transform: translate3d(-50%, -50%, 0);
 }

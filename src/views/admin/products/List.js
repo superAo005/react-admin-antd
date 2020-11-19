@@ -58,9 +58,7 @@ class List extends React.Component{
     render(){
         return (
             <Card title={<Trans>列表</Trans>} extra={<Button type="primary" size="small">新增</Button>}>
-                <Table columns={columns} bordered dataSource={dataSource}>
-
-                </Table>
+                <Table columns={columns} bordered dataSource={dataSource}></Table>
             </Card>
         )
     }

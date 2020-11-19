@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown, Tabs } from 'antd'
-import logo from './logo192.png'
+import logo from '../../assets/images/logo192.png'
 import { adminRoutes as routes } from '../../routes'
 import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutlined } from '@ant-design/icons';
 import './index.css'  
@@ -138,7 +138,6 @@ class Index extends React.Component{
     // 路由跳转到页面
     toRouteView = (item) => {
         this.props.history.push(item.path)
-        
     }
 
     // 标签页改变时

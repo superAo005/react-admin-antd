@@ -14,7 +14,7 @@ class Index extends Component {
     super(props)
     this.state = { themeColor: '' }
   }
-  
+
   handleSwitchColor (color) {
     if (this.props.onSwitchColor) {
         // dispatch action 去改变颜色
