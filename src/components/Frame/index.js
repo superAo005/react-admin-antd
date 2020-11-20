@@ -376,7 +376,9 @@ class Index extends React.Component{
                             {/* <Menu.Item key="1"><Trans>菜单一</Trans></Menu.Item>
                             <Menu.Item key="2"><Trans>菜单二</Trans></Menu.Item>
                             <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item> */}
-                            
+                            <Menu.Item>
+                                <a href='https://ant.design/components/overview-cn/' target="_blank">Antd文档手册</a>
+                            </Menu.Item>
                             {/* 头像和登录名称 */}
                             <SubMenu style={{ float: 'right' }}
                                 title={
