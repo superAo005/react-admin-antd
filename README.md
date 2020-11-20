@@ -23,6 +23,7 @@ npm run start
 ```
 ├── public                  项目静态资源
 ├── src                     主要开发
+|   ├── assets              静态文件目录
 |   ├── components          公共组件
 |—— |   └── Frame           admin框架结构
 |   |       

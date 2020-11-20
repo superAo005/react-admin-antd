@@ -1,14 +1,26 @@
+
 #root{
     /* background-color: #dddddd; */
     background: url("../assets/images/banner.jpg") no-repeat center center;
     background-size: cover;
 }
+
 .login-form {
-    max-width: 480px;
+    max-width: 420px;
     left: 80%;
     top: 50%;
     transform: translate3d(-50%, -50%, 0);
 }
+
+@media screen and (max-width:980px) {
+    .login-form {
+        max-width: 280px;
+        left: 50%;
+        top: 50%;
+        transform: translate3d(-50%, -50%, 0);
+    }
+}
+
 .login-form-forgot {
     float: right;
 }
