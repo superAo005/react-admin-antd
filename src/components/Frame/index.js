@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react'
 import { withRouter, Link } from 'react-router-dom'
-import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown, Tabs } from 'antd'
+import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown, Tabs, Button } from 'antd'
 import logo from '@/assets/images/logo192.png'
 import { adminRoutes as routes } from '@/routes'
-import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutlined } from '@ant-design/icons';
+import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutlined, DownOutlined } from '@ant-design/icons'
 import './index.css'  
 import { Trans, withTranslation } from 'react-i18next'
 import Auth from '@/utils/auth'
@@ -171,19 +171,30 @@ class Index extends React.Component{
         let lastIndex
         this.state.panes.forEach((pane, i) => {
             if (pane.path === targetKey) {
-            lastIndex = i - 1
+                lastIndex = i - 1
             }
-        });
-        const panes = this.state.panes.filter(pane => pane.path !== targetKey);
+        })
+
+        /**
+         * 问题:因为当前方法被多次调用,this.setState()方法是异步方法,
+         * this.state.panes还没被赋值改变完成时,当前方法又被调用了,然而this.state.panes值还没改变完成就又被使用了,所以存在数据误差
+         * 解决方案:使用setTimeout方法
+         */
+        
+        // 过滤当前关闭的标签页重新赋值数组
+        const panes = this.state.panes.filter(pane => pane.path !== targetKey)
+
+        // 如果要删除的标签就是当前选中的标签则向前选中一个标签
         if (panes.length && activeKey === targetKey) {
             if (lastIndex >= 0) {
-            activeKey = panes[lastIndex].path
+                activeKey = panes[lastIndex].path
             } else {
-            activeKey = panes[0].path
+                activeKey = panes[0].path
             }
         }
-        this.setState({ panes, activeKey })
-        this.props.history.push(activeKey)
+        this.setState({ panes, activeKey },()=>{
+            this.props.history.push(activeKey)
+        }) 
     }
 
     // 当左侧菜单被展开或关闭时触发此处
@@ -203,6 +214,7 @@ class Index extends React.Component{
         }
     }
 
+    // 标签页
     newTabs = (routers)=>{ 
         for(let i in routers){
             if(!routers[i].childrens && routers[i].isShow && routers[i].path === this.state.pathname){
@@ -234,10 +246,36 @@ class Index extends React.Component{
         }
     }
 
+    // 关闭标签页
+    closeTabs = (type) =>{
+        switch(type){
+            case 'all':
+                this.state.panes.forEach((item)=>{
+                    if(item.path !== '/admin'){
+                        setTimeout(()=>{
+                            this.remove(item.path)
+                        })
+                    }
+                })
+                break
+            case 'other':
+                this.state.panes.forEach((item)=>{
+                    if(item.path !== '/admin' && item.path !== this.props.location.pathname){
+                        setTimeout(()=>{
+                            this.remove(item.path)
+                        })
+                    }
+                })
+                break
+            default:          
+        }
+    }
+
     // 页面挂载之前第一次加载时
     componentDidMount = () => {
         // 面包签数据初始化
         this.loadBreadcrumb(routes)
+
         this.getPath(this.props.location.pathname)
 
         // 标签页数据初始化
@@ -382,28 +420,53 @@ class Index extends React.Component{
                             </Dropdown>
                         </Menu>
                     </Header>
-                    {/* 标签页 */}
-                    <Tabs
-                        hideAdd
-                        onChange={this.onChange}
-                        activeKey={this.state.activeKey}
-                        type="editable-card"
-                        onEdit={this.onEdit}
-                        size="small"
-                        tabPosition="top"
-                        animated={true}
-                        >
-                        {
-                            this.state.panes.map(pane => (
-                                <TabPane 
-                                tab={ <span> <IconFont type={pane.icon}/> <Trans>{pane.title}</Trans> </span> } 
-                                key={pane.path} 
-                                closeIcon={this.isHideCloseIcon(pane)}>
-
-                                </TabPane>
-                            ))
-                        }
-                    </Tabs>
+                    <div style={{
+                        display:"flex",
+                        flexDirection:'row',
+                        justifyContent:'space-between',
+                        alignItems:'center',
+                        width:'100%',
+                        padding:'5px'
+                    }}>
+                        {/* 标签页 */}
+                        <Tabs
+                            hideAdd
+                            onChange={this.onChange}
+                            activeKey={this.state.activeKey}
+                            type="editable-card"
+                            onEdit={this.onEdit}
+                            size="small"
+                            tabPosition="top"
+                            animated={true}
+                            >
+                            {
+                                this.state.panes.map(pane => (
+                                    <TabPane 
+                                    tab={ <span> <IconFont type={pane.icon}/> <Trans>{pane.title}</Trans> </span> } 
+                                    key={pane.path} 
+                                    closeIcon={this.isHideCloseIcon(pane)}>
+                                    </TabPane>
+                                ))
+                            }
+                        </Tabs>
+                        {/* 下拉按钮 */}
+                        <Dropdown overlay={
+                            <Menu>
+                                <Menu.Item onClick={this.closeTabs.bind(this,'all')}>
+                                    <Trans>全部关闭</Trans> 
+                                </Menu.Item>
+                                <Menu.Item onClick={this.closeTabs.bind(this,'other')}>
+                                    <Trans>关闭其他</Trans> 
+                                </Menu.Item>
+                            </Menu>
+                        } placement="bottomCenter">
+                            <Button style={{
+                                width:'auto',
+                                minHeight:36,
+                                textAlign:'center'
+                            }}> 操作 <DownOutlined /></Button>
+                        </Dropdown>
+                    </div>
                      {/* 内容区域 */}
                     <Content
                         style={{

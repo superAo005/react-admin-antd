@@ -106,7 +106,7 @@
 
 /* 标签页 */
 .ant-tabs-top > .ant-tabs-nav{
-    margin: 5px 5px;
+    margin: 0;
 }
 
 .ant-tabs-tab .anticon {
