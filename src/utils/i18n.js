@@ -1,9 +1,9 @@
 import i18n from "i18next"
 import { initReactI18next } from "react-i18next"
-import zhCommon from "../locales/zh/common"
-import zhLeftMenu from "../locales/zh/left_menu"
-import enCommon from "../locales/en/common"
-import enLeftMenu from "../locales/en/left_menu"
+import zhCommon from "@/locales/zh/common"
+import zhLeftMenu from "@/locales/zh/left_menu"
+import enCommon from "@/locales/en/common"
+import enLeftMenu from "@/locales/en/left_menu"
 
 const resources = {
   zh: {

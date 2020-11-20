@@ -1,4 +1,4 @@
-import themeColor from "./../state/themeColor"
+import themeColor from "@/redux/state/themeColor"
 
 const colorReducers = (state = {...themeColor}, action) => {
 

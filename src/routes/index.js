@@ -1,26 +1,26 @@
 
 // 登录
-import Login from "../views/Login"
+import Login from "@/views/Login"
 
 // 404
-import notFound from "../views/error/notFound"
-import Home from "../views/admin"
+import notFound from "@/views/error/notFound"
+import Home from "@/views/admin"
 
 // 看板
-import Dashboard from "../views/admin/dashboard"
+import Dashboard from "@/views/admin/dashboard"
 
 // 商品管理
-import Product from "../views/admin/products"
-import List from "../views/admin/products/List"
-import Edit from "../views/admin/products/Edit"
+import Product from "@/views/admin/products"
+import List from "@/views/admin/products/List"
+import Edit from "@/views/admin/products/Edit"
 
 // 组件
-import Assembly from "../views/admin/assembly"
-import From from "../views/admin/assembly/From"
-import Button from "../views/admin/assembly/Button"
+import Assembly from "@/views/admin/assembly"
+import From from "@/views/admin/assembly/From"
+import Button from "@/views/admin/assembly/Button"
 
 // 测试页面
-import Test from "../views/admin/test"
+import Test from "@/views/admin/test"
 
 
 

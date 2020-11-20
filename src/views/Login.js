@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form, Input, Button, Checkbox, Card } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import Auth from '../utils/auth'
+import Auth from '@/utils/auth'
 import './login.css'
 
 class Login extends React.Component{
@@ -73,7 +73,7 @@ class Login extends React.Component{
                         <Checkbox>记住我</Checkbox>
                     </Form.Item>
             
-                    <a className="login-form-forgot" href="">
+                    <a className="login-form-forgot" href="www.antd-admin.cn/login">
                         忘记密码？
                     </a>
                 </Form.Item>
@@ -82,7 +82,7 @@ class Login extends React.Component{
                     <Button type="primary" htmlType="submit" className="login-form-button">
                     登 录
                     </Button>
-                    或者 <a href="">注册账号!</a>
+                    或者 <a href="www.antd-admin.cn/login">注册账号!</a>
                 </Form.Item>
                 </Form>
             </Card>

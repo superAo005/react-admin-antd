@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 import { Menu, Layout, Avatar, Breadcrumb, Switch, Dropdown, Tabs } from 'antd'
-import logo from '../../assets/images/logo192.png'
-import { adminRoutes as routes } from '../../routes'
+import logo from '@/assets/images/logo192.png'
+import { adminRoutes as routes } from '@/routes'
 import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutlined } from '@ant-design/icons';
 import './index.css'  
 import { Trans, withTranslation } from 'react-i18next'
-import Auth from '../../utils/auth'
+import Auth from '@/utils/auth'
 const { SubMenu } = Menu
 const { Header, Content, Footer, Sider } = Layout
 const { TabPane } = Tabs
@@ -41,7 +41,6 @@ class Index extends React.Component{
         super(props)
         this.state = {
             collapsed: false,
-            pathSnippets: null,
             extraBreadcrumbItems: null,
             state: null,
             theme: 'dark',
@@ -95,12 +94,13 @@ class Index extends React.Component{
     }
 
     // 获取面包屑
-    getPath = () => {
-        // 对路径进行切分，存放到this.state.pathSnippets中
-        this.state.pathSnippets = this.props.location.pathname.split('/').filter(i => i)
+    getPath = (routeUrl) => {
+        // 对路径进行切分
+        let pathSnippets = routeUrl.split('/').filter(i => i)
         // 将切分的路径读出来，形成面包屑，存放到this.state.extraBreadcrumbItems
-        this.state.extraBreadcrumbItems = this.state.pathSnippets.map((_,index) => {
-            let url = `/${this.state.pathSnippets.slice(0, index + 1).join('/')}`
+        let extraBreadcrumbItems = pathSnippets.map((_,index) => {
+            let url = `/${pathSnippets.slice(0, index + 1).join('/')}`
+            // 判断当前路由是否存在有面包签，有则返回，无则返回 ""
             if(breadcrumbNameMap[url]){
                 return (
                     <Breadcrumb.Item key={url}>
@@ -111,6 +111,11 @@ class Index extends React.Component{
                     </Breadcrumb.Item>
                 )
             }
+            return ""
+        })
+
+        this.setState({
+            extraBreadcrumbItems: extraBreadcrumbItems
         })
     }
 
@@ -132,6 +137,7 @@ class Index extends React.Component{
                     <Trans>{item.title}</Trans>
                 </Menu.Item>
             }
+            return ""
         })
     }
 
@@ -142,12 +148,15 @@ class Index extends React.Component{
 
     // 标签页改变时
     onChange = activeKey => {
-        this.state.activeKey = activeKey
-        this.state.openKeys = ()=>{
+        let openKeys = ()=>{
             let arr = activeKey.split('/')
             arr.pop()
             return arr.join('/')
         }
+        this.setState({
+            activeKey: activeKey,
+            openKeys: openKeys
+        })
         this.props.history.push(activeKey)
     }
 
@@ -225,24 +234,41 @@ class Index extends React.Component{
         }
     }
 
-    // 路由组件第一次加载时
-    componentDidMount () {
-        this.state.panes = [routes[0]] // 标签页数据初始化
-        this.fetchData(this.props.location)
+    // 页面挂载之前第一次加载时
+    componentDidMount = () => {
+        // 面包签数据初始化
+        this.loadBreadcrumb(routes)
+        this.getPath(this.props.location.pathname)
+
+        // 标签页数据初始化
+        this.setState({
+            panes: [routes[0]]
+        },()=>{
+            this.fetchData(this.props.location)
+        })   
     }
     
     // 渲染标签页
     fetchData(location) {
-        const type = location.pathname
-        this.state.pathname = type
-        this.newTabs(routes)
+        this.setState({
+            pathname:location.pathname
+        },()=>{
+            this.newTabs(routes)
+        })
+        
     }
 
-    // 路由组件改变时
+    // 路由更新时
     componentWillReceiveProps(nextProps) {
+        
+        // 判断点击跳转不是当前页面
         if (nextProps.location.pathname !== this.state.pathname) {
-            this.fetchData(nextProps.location);
+            // 更新标签页
+            this.fetchData(nextProps.location)
+            // 更新面包签
+            this.getPath(nextProps.location.pathname)
         } 
+        
     }
 
     // 检测是否关闭标签
@@ -255,9 +281,6 @@ class Index extends React.Component{
     }
 
     render(){
-        this.loadBreadcrumb(routes)
-        this.getPath()
-
         return (
             <Layout>
                 {/* 左边区域 */}

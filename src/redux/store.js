@@ -1,5 +1,5 @@
 import { createStore } from 'redux'
-import RootReducers from './reducers/index'
+import RootReducers from '@/redux/reducers/index'
  
 // 创建store
 const store = createStore(RootReducers)

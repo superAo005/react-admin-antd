@@ -1,10 +1,10 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { adminRoutes } from './routes'
-import './utils/i18n'
+import { adminRoutes } from '@/routes'
+import '@/utils/i18n'
 import './App.css'
-import Frame from './components/Frame'
-import Auth from './utils/auth'
+import Frame from '@/components/Frame'
+import Auth from '@/utils/auth'
 
 
 class App extends React.Component {

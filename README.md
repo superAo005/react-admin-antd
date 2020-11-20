@@ -34,5 +34,8 @@ npm run start
 |   |—— App.js              App组件
 |—— |—— index.js            react组件入口
 |   └── serviceWorker.js    react注解使用配置
+|—— config-overrides.js     配置文件
+|—— package-lock.json       npm 安装的插件包详情
+|—— package.json            启动脚本和插件包配置加载
 └── 说明文档   
 ```

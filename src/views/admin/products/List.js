@@ -39,17 +39,20 @@ const dataSource = [
     {
         id: 1,
         name: '特仑苏',
-        price: 78.5
+        price: 78.5,
+        key: 1
     },
     {
         id: 2,
         name: '红富士',
-        price: 60.5
+        price: 60.5,
+        key: 2
     },
     {
         id: 3,
         name: '中华',
-        price: 50
+        price: 50,
+        key: 3
     }
 ]
 
