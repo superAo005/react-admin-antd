@@ -15,6 +15,7 @@ import store from "@/redux/store";
 // redux 中三个重要部分: action reducer state(store)
 
 ReactDOM.render(
+  // 全局注册使用redux
   <Provider store={store}>
     <BrowserRouter>
         {/* Switch组件做性能优化一旦匹配到路由就停止匹配 */}

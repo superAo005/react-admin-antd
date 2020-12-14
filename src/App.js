@@ -6,41 +6,43 @@ import './App.css'
 import Frame from '@/components/Frame'
 import Auth from '@/utils/auth'
 
-
 class App extends React.Component {
-  // 递归处理路由
-  generateRoute(item){
-    // 有子路由
-    if(item.childrens && item.childrens.length !== 0){
+
+   // 递归处理路由，生成路由组件
+   generateRoute(item){
+      // 有子路由
+      if(item.childrens && item.childrens.length !== 0){
       // 当前路由也要生成路由
       let routeView = <Route key={item.path} 
-                             path={item.path}
-                             exact={item.exact}
-                             render={
-                               routeProps=>{
-                                 return <item.component {...routeProps} />
-                               }
-                             }></Route>
+                              path={item.path}
+                              exact={item.exact}
+                              render={
+                                routeProps=>{
+                                    // 路由对应的组件 <Route><组件名称></组件名称></Route> ,这样就不用写Link标签来指定的路由组件了
+                                    return <item.component {...routeProps} />
+                                }
+                              }></Route>
       // 生成当前路由的子路由
       let childrens = item.childrens.map((route)=>{
-        return this.generateRoute(route)
+          return this.generateRoute(route)
       })
       childrens.push(routeView)
       return childrens
-    }
+      }
 
-    // 生成当前路由
-    return <Route key={item.path} 
+      // 生成当前路由
+      return <Route key={item.path} 
                   path={item.path}
                   exact={item.exact}
                   render={
-                    routeProps=>{
-                      return <item.component {...routeProps} />
-                    }
+                      routeProps=>{
+                        return <item.component {...routeProps} />
+                      }
                   }></Route>
-  }
+  } 
 
   render(){
+    // 全局判断是否登录
     return Auth.isLogin() ? (
       <Frame>
         <Switch>
@@ -56,7 +58,6 @@ class App extends React.Component {
           {/* <Route key='/*' path='/*' component={notFound}></Route> */}
         </Switch>
       </Frame>
-      
     ) : <Redirect to="/login"></Redirect>
   }
 }

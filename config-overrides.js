@@ -13,7 +13,7 @@ module.exports = override(
     addWebpackAlias({
         '@': pathResolve('./src')
     }),
-    // antd组件样式全局引入
+    // antd组件css样式全局引入
     fixBabelImports('import', {
 		libraryName: 'antd',
 		libraryDirectory: 'es',

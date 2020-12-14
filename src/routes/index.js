@@ -21,6 +21,7 @@ import Button from "@/views/admin/assembly/Button"
 
 // 测试页面
 import Test from "@/views/admin/test"
+import Example from "@/views/admin/example"
 
 
 
@@ -112,6 +113,14 @@ export const adminRoutes = [
         exact: true,
         isShow: true,
         title: 'redux测试',
+        icon: "icon-yibiao"
+    },
+    {
+        path: '/admin/example',
+        component: Example,
+        exact: true,
+        isShow: true,
+        title: 'hooks测试',
         icon: "icon-yibiao"
     },
 ]

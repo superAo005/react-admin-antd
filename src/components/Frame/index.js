@@ -7,6 +7,7 @@ import { MenuUnfoldOutlined, MenuFoldOutlined, createFromIconfontCN, BulbOutline
 import './index.css'  
 import { Trans, withTranslation } from 'react-i18next'
 import Auth from '@/utils/auth'
+
 const { SubMenu } = Menu
 const { Header, Content, Footer, Sider } = Layout
 const { TabPane } = Tabs
@@ -271,11 +272,10 @@ class Index extends React.Component{
         }
     }
 
-    // 页面挂载之前第一次加载时
+    // 页面挂载完成时
     componentDidMount = () => {
         // 面包签数据初始化
         this.loadBreadcrumb(routes)
-
         this.getPath(this.props.location.pathname)
 
         // 标签页数据初始化
@@ -295,10 +295,11 @@ class Index extends React.Component{
         })
         
     }
-
+    // 组件第一次存在于虚拟dom中，函数是不会被执行的
+    // 如果已经存在dom中，函数才会被执行
+    // 第一次加载不会执行，dom存在更新时才会执行
     // 路由更新时
     componentWillReceiveProps(nextProps) {
-        
         // 判断点击跳转不是当前页面
         if (nextProps.location.pathname !== this.state.pathname) {
             // 更新标签页
@@ -377,7 +378,7 @@ class Index extends React.Component{
                             <Menu.Item key="2"><Trans>菜单二</Trans></Menu.Item>
                             <Menu.Item key="3"><Trans>菜单三</Trans></Menu.Item> */}
                             <Menu.Item>
-                                <a href='https://ant.design/components/overview-cn/' target="_blank">Antd文档手册</a>
+                                <a href='https://ant.design/components/overview-cn/' target="_blank" rel="noopener noreferrer">Antd文档手册</a>
                             </Menu.Item>
                             {/* 头像和登录名称 */}
                             <SubMenu style={{ float: 'right' }}
@@ -478,7 +479,8 @@ class Index extends React.Component{
                             overflowY: "auto"
                         }}
                     >
-                        {this.props.children}
+                        {/* 这里表示加载子组件 */}
+                        {this.props.children} 
                     </Content>
                     {/* 底部 */}
                     <Footer style={{ textAlign: 'center' }}><Trans>睿颐软件科技有限公司</Trans> ©2020 Created by Ant UED</Footer>
