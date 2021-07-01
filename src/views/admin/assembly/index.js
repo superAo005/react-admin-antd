@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 function index() {
-    return (
-        <div>
-            <h1>组件</h1>
-        </div>
-    )
+  return (
+    <div>
+      <h1>组件</h1>
+    </div>
+  );
 }
 
-export default index
+export default index;

@@ -3,8 +3,7 @@
  */
 
 const color = {
-    themeColor: "green"
-}
+  themeColor: "green",
+};
 
-
-export default color
+export default color;
