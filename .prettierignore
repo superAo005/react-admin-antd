@@ -1,0 +1,10 @@
+.prettierignore
+**/*.svg
+# package.json
+/dist
+.editorconfig
+/public
+# dependencies
+/node_modules
+# production
+/build
