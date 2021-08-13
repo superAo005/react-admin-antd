@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Input, Button, Checkbox, Card } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import Auth from '@/utils/auth'
-import './login.less'
+import './login.css'
 
 class Login extends React.Component {
   constructor(props) {

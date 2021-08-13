@@ -8,7 +8,6 @@ const {
   disableEsLint,
 } = require('customize-cra')
 // const rewireLess = require('react-app-rewire-less')
-
 // config = rewireLess.withLoaderOptions({
 //   modifyVars: { '@primary-color': '#1DA57A' },
 //   javascriptEnabled: true,
@@ -33,15 +32,14 @@ module.exports = override(
     style: 'css',
   }),
   addLessLoader({
-    lessOptions: {
-      javascriptEnabled: true,
-      relativeUrls: false,
-      modifyVars: { '@primary-color': '#A80000' },
-      // cssModules: {
-      //   // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
-      //   localIdentName: "[path][name]__[local]--[hash:base64:5]",
-      // }
-    },
+    javascriptEnabled: true,
+    // relativeUrls: false,
+    sourceMap:true,
+    modifyVars: { '@primary-color': '#A80000' },
+    // cssModules: {
+    //   // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+    //   localIdentName: "[path][name]__[local]--[hash:base64:5]",
+    // }
   }),
   // 允许二次配置 eslint 一定要用 path.resolve 引入eslint的配置文件，否则不生效
   // useEslintRc(pathResolve("./.eslintrc.json"))
