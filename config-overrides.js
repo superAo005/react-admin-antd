@@ -3,6 +3,7 @@ const {
   addDecoratorsLegacy,
   addWebpackAlias,
   fixBabelImports,
+  addLessLoader,
 } = require("customize-cra");
 
 const path = require("path");
@@ -22,5 +23,16 @@ module.exports = override(
     libraryName: "antd",
     libraryDirectory: "es",
     style: "css",
+  }),
+  addLessLoader({
+    lessOptions: {
+      javascriptEnabled: true,
+      relativeUrls: false,
+      modifyVars: { "@primary-color": "#A80000" },
+      // cssModules: {
+      //   // if you use CSS Modules, and custom `localIdentName`, default is '[local]--[hash:base64:5]'.
+      //   localIdentName: "[path][name]__[local]--[hash:base64:5]",
+      // }
+    },
   })
 );

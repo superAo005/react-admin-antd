@@ -45,3 +45,22 @@ npm run start
 |—— package.json            启动脚本和插件包配置加载
 └── 说明文档
 ```
+
+# 配置多环境
+
+```
+修改package.json文件
+{
+  // ...
+  "scripts": {
+    "start": "dotenv -e .env.dev react-app-rewired start",
+    "build:sit": "dotenv -e .env.sit react-app-rewired build",
+    "build:prod": "dotenv -e .env.prod react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  // ...
+}
+ 在index.html中使用%REACT_APP_URL_API%
+ 在js/jsx中：process.env.REACT_APP_URL_API
+```
