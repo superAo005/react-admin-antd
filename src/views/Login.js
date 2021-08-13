@@ -1,58 +1,53 @@
-import React from "react";
-import { Form, Input, Button, Checkbox, Card } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import Auth from "@/utils/auth";
-import "./login.css";
+import React from 'react'
+import { Form, Input, Button, Checkbox, Card } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import Auth from '@/utils/auth'
+import './login.less'
 
 class Login extends React.Component {
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       username: null,
       password: null,
       isRemeber: false,
-    };
+    }
   }
 
   // 渲染用户
   isRemeber = () => {
-    let userinfo = Auth.getUserPwd();
+    let userinfo = Auth.getUserPwd()
     if (userinfo && userinfo.remember) {
       this.setState({
         username: userinfo.username,
         password: userinfo.password,
-        isRemeber: "checked",
-      });
+        isRemeber: 'checked',
+      })
     }
-  };
+  }
 
   onFinish = (values) => {
     // console.log('Received values of form: ', values)
     // 登录成功，设置token令牌
-    Auth.setToken("shaiudhsakjsaidhsakjndsjkahdakjldsa");
+    Auth.setToken('shaiudhsakjsaidhsakjndsjkahdakjldsa')
     // 是否点击记住我，如果点击则保存用户账号和密码
-    Auth.setUserPwd(values);
-    this.props.history.push("/admin"); // 成功后跳转
-  };
+    Auth.setUserPwd(values)
+    this.props.history.push('/admin') // 成功后跳转
+  }
 
   // constructor加载之后,DOM渲染之前执行此方法
   componentWillMount() {
-    this.isRemeber();
+    this.isRemeber()
   }
 
   render() {
     return (
       <Card title="后台管理系统" className="login-form">
-        <Form
-          name="normal_login"
-          initialValues={{ remember: true }}
-          onFinish={this.onFinish}
-        >
+        <Form name="normal_login" initialValues={{ remember: true }} onFinish={this.onFinish}>
           <Form.Item
             name="username"
-            rules={[{ required: true, message: "请输入用户名!" }]}
-            initialValue={this.state.username}
-          >
+            rules={[{ required: true, message: '请输入用户名!' }]}
+            initialValue={this.state.username}>
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Username"
@@ -60,9 +55,8 @@ class Login extends React.Component {
           </Form.Item>
           <Form.Item
             name="password"
-            rules={[{ required: true, message: "请输入密码!" }]}
-            initialValue={this.state.password}
-          >
+            rules={[{ required: true, message: '请输入密码!' }]}
+            initialValue={this.state.password}>
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
@@ -70,11 +64,7 @@ class Login extends React.Component {
             />
           </Form.Item>
           <Form.Item>
-            <Form.Item
-              name="remember"
-              valuePropName={this.state.isRemeber}
-              noStyle
-            >
+            <Form.Item name="remember" valuePropName={this.state.isRemeber} noStyle>
               <Checkbox>记住我</Checkbox>
             </Form.Item>
 
@@ -84,19 +74,15 @@ class Login extends React.Component {
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-            >
+            <Button type="primary" htmlType="submit" className="login-form-button">
               登 录
             </Button>
-            或者 <a href="www.antd-admin.cn/login">注册账号!</a>
+            {/* 或者 <a href="www.antd-admin.cn/login">注册账号!</a> */}
           </Form.Item>
         </Form>
       </Card>
-    );
+    )
   }
 }
 
-export default Login;
+export default Login

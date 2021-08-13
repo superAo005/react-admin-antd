@@ -4,9 +4,15 @@ const {
   addWebpackAlias,
   fixBabelImports,
   addLessLoader,
-  useEslintRc,
+  // useEslintRc,
   disableEsLint,
 } = require('customize-cra')
+// const rewireLess = require('react-app-rewire-less')
+
+// config = rewireLess.withLoaderOptions({
+//   modifyVars: { '@primary-color': '#1DA57A' },
+//   javascriptEnabled: true,
+// })(config, env)
 
 const path = require('path')
 function pathResolve(pathUrl) {
@@ -37,7 +43,7 @@ module.exports = override(
       // }
     },
   }),
-  // 注意，一定要用 path.resolve 引入eslint的配置文件，否则不生效
+  // 允许二次配置 eslint 一定要用 path.resolve 引入eslint的配置文件，否则不生效
   // useEslintRc(pathResolve("./.eslintrc.json"))
   disableEsLint()
 )
