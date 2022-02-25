@@ -572,7 +572,7 @@ class Index extends React.Component {
           </Content>
           {/* 底部 */}
           <Footer style={{ textAlign: "center" }}>
-            <Trans>睿颐软件科技有限公司</Trans> ©2020 Created by Ant UED
+            <Trans>超级奥</Trans> ©2022 Created by superAo
           </Footer>
         </Layout>
       </Layout>
